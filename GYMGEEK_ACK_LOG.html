@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html lang="en"><head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0">
-<title>GymGeek — Document Portal</title>
-<link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@1,900&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-/* ── GymGeek Document Styles — Brand Compliant v2 ──────────────────────────── */
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>GymGeek | Staff Acknowledgement Log</title>
+<style>/* ── GymGeek Document Styles — Brand Compliant v2 ──────────────────────────── */
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Raleway:ital,wght@1,900&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&family=Jost:wght@200;300;400&display=swap');
 
 :root {
@@ -1005,221 +1006,193 @@ tr:hover .del-row-btn { display: flex; }
   .confirm-btn { width: 100%; text-align: center; }
 }
 
-
-/* ── Share modal ─────────────────────────────────────────────────────────── */
-.modal-overlay {
-  position: fixed; inset: 0; z-index: 200;
-  background: rgba(20,22,25,0.88);
-  backdrop-filter: blur(6px);
-  display: flex; align-items: center; justify-content: center;
-  opacity: 0; pointer-events: none;
-  transition: opacity 0.2s;
-}
-.modal-overlay.visible { opacity: 1; pointer-events: all; }
-
-.modal-box {
-  background: var(--card-bg);
-  border: 1px solid var(--border);
-  border-top: 3px solid var(--blue);
-  border-radius: var(--radius);
-  padding: 32px 36px;
-  max-width: 600px;
-  width: 92%;
-  box-shadow: 0 32px 80px rgba(0,0,0,0.6);
-}
-
-.modal-title {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 17px;
-  font-weight: 600;
-  color: var(--text);
-  margin-bottom: 6px;
-}
-
-.modal-sub {
-  font-size: 12px;
-  color: var(--muted);
-  margin-bottom: 24px;
-  line-height: 1.6;
-}
-
-.share-row {
+/* ── Confirm banner v2 ───────────────────────────────────────────────────── */
+.confirm-banner {
+  background: var(--card-inner);
+  border-top: 2px solid rgba(119,143,221,0.4);
+  padding: 20px 28px;
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 10px 0;
-  border-bottom: 1px solid var(--border-soft);
+  gap: 16px;
   flex-wrap: wrap;
 }
-.share-row:last-child { border-bottom: none; }
+.confirm-banner-text { flex: 1; min-width: 200px; }
+.confirm-banner-title { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 3px; }
+.confirm-banner-sub { font-size: 11px; color: var(--muted); line-height: 1.5; }
 
-.share-doc-name {
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--text);
-  flex: 1;
-  min-width: 180px;
-}
-
-.share-url {
-  font-family: 'DM Mono', monospace;
-  font-size: 10px;
-  color: var(--muted);
-  background: var(--card-inner);
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  padding: 5px 8px;
-  flex: 2;
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.share-copy-btn {
-  background: var(--card-inner);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 5px 14px;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--text);
-  cursor: pointer;
-  flex-shrink: 0;
-  transition: background 0.15s, color 0.15s;
-}
-.share-copy-btn:hover { background: var(--blue); color: white; border-color: var(--blue); }
-.share-copy-btn.copied { background: var(--pass-bg); color: var(--pass-txt); border-color: var(--pass-border); }
-
-.share-copy-all {
+.token-warning {
   width: 100%;
-  margin-top: 20px;
-  padding: 11px;
-  background: var(--blue);
-  color: white;
-  border: none;
+  background: rgba(255,193,30,0.1);
+  border: 1px solid rgba(255,193,30,0.3);
   border-radius: var(--radius-sm);
+  padding: 8px 12px;
+  font-size: 11px;
+  color: var(--amber);
+  font-family: 'DM Mono', monospace;
+  display: none;
+}
+.token-warning.visible { display: block; }
+
+.confirm-name-input {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  color: var(--text);
+  width: 220px;
+  outline: none;
+  transition: border-color 0.15s;
+  flex-shrink: 0;
+}
+.confirm-name-input:focus { border-color: var(--blue); }
+.confirm-name-input::placeholder { color: var(--muted); }
+.confirm-name-input:disabled { opacity: 0.5; }
+
+.confirm-btn {
+  position: relative;
+  overflow: hidden;
+  background: rgba(119,143,221,0.15);
+  color: var(--blue);
+  border: 1px solid rgba(119,143,221,0.4);
+  border-radius: var(--radius-sm);
+  padding: 10px 22px;
   font-family: 'DM Sans', sans-serif;
   font-size: 13px;
   font-weight: 700;
   cursor: pointer;
-  transition: opacity 0.15s;
-  letter-spacing: 0.03em;
+  transition: background 0.15s, transform 0.1s, color 0.15s, border-color 0.15s;
+  flex-shrink: 0;
+  white-space: nowrap;
+  min-width: 160px;
+  text-align: center;
 }
-.share-copy-all:hover { opacity: 0.88; }
-.share-copy-all.copied { background: var(--green-dark); }
-
-.modal-close {
-  display: block;
-  margin-top: 14px;
-  width: 100%;
-  padding: 9px;
-  background: transparent;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  color: var(--muted);
-  font-family: 'DM Sans', sans-serif;
-  font-size: 13px;
-  cursor: pointer;
-  transition: border-color 0.15s, color 0.15s;
+.confirm-btn:hover:not(:disabled) { background: rgba(119,143,221,0.25); transform: translateY(-1px); }
+.confirm-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+.confirm-btn.saving { background: rgba(119,143,221,0.1); color: var(--muted); border-color: var(--border); }
+.confirm-btn.confirmed {
+  background: var(--pass-bg);
+  color: var(--pass-txt);
+  border-color: var(--pass-border);
+  cursor: default;
 }
-.modal-close:hover { border-color: var(--text); color: var(--text); }
+.confirm-btn.error-state {
+  background: var(--fail-bg);
+  color: var(--fail-txt);
+  border-color: var(--fail-border);
+}
 
-.share-note {
+/* Ripple effect */
+.confirm-btn .ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.3);
+  transform: scale(0);
+  animation: ripple-anim 0.5s linear;
+  pointer-events: none;
+}
+@keyframes ripple-anim {
+  to { transform: scale(4); opacity: 0; }
+}
+
+/* Success pulse */
+@keyframes confirm-pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(97,197,153,0.5); }
+  70%  { box-shadow: 0 0 0 10px rgba(97,197,153,0); }
+  100% { box-shadow: 0 0 0 0 rgba(97,197,153,0); }
+}
+.confirm-btn.confirmed { animation: confirm-pulse 0.6s ease; }
+
+.confirm-status {
   font-size: 11px;
+  font-family: 'DM Mono', monospace;
   color: var(--muted);
-  margin-top: 16px;
-  padding: 10px 12px;
-  background: var(--card-inner);
-  border-radius: var(--radius-sm);
-  border-left: 2px solid var(--blue);
-  line-height: 1.6;
+  flex-shrink: 0;
+  min-width: 160px;
+}
+.confirm-status.success { color: var(--pass-txt); }
+.confirm-status.error   { color: var(--fail-txt); }
+
+@media (max-width: 768px) {
+  .confirm-banner { padding: 16px; gap: 12px; }
+  .confirm-name-input { width: 100%; }
+  .confirm-btn { width: 100%; }
 }
 
-/* ── Action bar ──────────────────────────────────────────────────────────── */
-.action-bar {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-  align-items: center;
-  max-width: 1160px;
-  margin: 0 auto;
-  padding: 0 24px 20px;
-}
-
-.action-btn {
+/* ── Back to portal nav ──────────────────────────────────────────────────── */
+.back-nav {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 10px 20px;
-  border-radius: var(--radius-sm);
-  font-family: 'DM Sans', sans-serif;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
+  gap: 6px;
+  padding: 5px 12px 5px 8px;
+  background: var(--card-inner);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--muted);
   text-decoration: none;
-  transition: opacity 0.15s, transform 0.1s;
-  border: none;
-  letter-spacing: 0.02em;
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
+  flex-shrink: 0;
 }
-.action-btn:hover { opacity: 0.88; transform: translateY(-1px); }
-.action-btn.green { background: var(--green); color: var(--bg); }
-.action-btn.blue  { background: rgba(119,143,221,0.15); color: var(--blue); border: 1px solid rgba(119,143,221,0.3); }
+.back-nav:hover { color: var(--text); border-color: var(--green); background: rgba(97,197,153,0.06); }
+.back-nav-arrow { font-size: 12px; }
 
-.action-btn-icon {
-  font-size: 14px;
-  line-height: 1;
-}
 </style>
 </head>
-<body>
+<body data-filename="GYMGEEK_ACK_LOG.html">
 
-<!-- Share modal -->
-<div class="modal-overlay" id="share-modal">
-  <div class="modal-box">
-    <div class="modal-title">Share Work Experience Documents</div>
-    <div class="modal-sub">These are read-only links — anyone with the URL can view the documents in their browser. No login required. Share with schools, colleges or placement coordinators.</div>
-    <div class="share-row"><span class="share-doc-name">Under 18s Work Experience Risk Assessment</span><span class="share-url" id="url-0">https://gymgeekweymouth.github.io/-gymgeek-documents/GYMGEEK_RA_UNDER18_WORKEXP_2026.html</span><button class="share-copy-btn" onclick="copyUrl(0, 'https://gymgeekweymouth.github.io/-gymgeek-documents/GYMGEEK_RA_UNDER18_WORKEXP_2026.html')">Copy link</button></div><div class="share-row"><span class="share-doc-name">Young Persons Risk Assessment (Under 16s)</span><span class="share-url" id="url-1">https://gymgeekweymouth.github.io/-gymgeek-documents/GYMGEEK_RA_YOUNG_PERSONS_2026.html</span><button class="share-copy-btn" onclick="copyUrl(1, 'https://gymgeekweymouth.github.io/-gymgeek-documents/GYMGEEK_RA_YOUNG_PERSONS_2026.html')">Copy link</button></div><div class="share-row"><span class="share-doc-name">Anti-Bullying Policy</span><span class="share-url" id="url-2">https://gymgeekweymouth.github.io/-gymgeek-documents/GYMGEEK_POLICY_ANTIBULLYING_2026.html</span><button class="share-copy-btn" onclick="copyUrl(2, 'https://gymgeekweymouth.github.io/-gymgeek-documents/GYMGEEK_POLICY_ANTIBULLYING_2026.html')">Copy link</button></div><div class="share-row"><span class="share-doc-name">General Risk Assessment</span><span class="share-url" id="url-3">https://gymgeekweymouth.github.io/-gymgeek-documents/GYMGEEK_RA_GENERAL_2026.html</span><button class="share-copy-btn" onclick="copyUrl(3, 'https://gymgeekweymouth.github.io/-gymgeek-documents/GYMGEEK_RA_GENERAL_2026.html')">Copy link</button></div><div class="share-row"><span class="share-doc-name">GDPR & Data Protection Policy</span><span class="share-url" id="url-4">https://gymgeekweymouth.github.io/-gymgeek-documents/GYMGEEK_POLICY_GDPR_2026.html</span><button class="share-copy-btn" onclick="copyUrl(4, 'https://gymgeekweymouth.github.io/-gymgeek-documents/GYMGEEK_POLICY_GDPR_2026.html')">Copy link</button></div>
-    <button class="share-copy-all" id="copy-all-btn" onclick="copyAll()">
-      Copy all links to clipboard
-    </button>
-    <div class="share-note">
-      These links point to your live GitHub Pages site. Documents are always the latest version — if you update and save a document, the link automatically shows the updated version.
-    </div>
-    <button class="modal-close" onclick="closeModal()">Close</button>
-  </div>
-</div>
-
-<div class="portal-hero">
-  <div class="portal-hero-label">Health &amp; Safety &amp; Compliance Document Portal</div>
-  <div class="portal-hero-brand">GYMGEEK</div>
-  <p class="portal-hero-desc">All operational H&amp;S and compliance documents for GymGeek Weymouth. Open, edit and save directly to GitHub from any device. Staff confirm reading at the bottom of each document — tracked in the acknowledgement log.</p>
-  <div style="margin-top:24px;font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,0.15);letter-spacing:0.1em">github.com/gymgeekweymouth/-gymgeek-documents &nbsp;·&nbsp; 2026</div>
-</div>
-
-<div style="max-width:1160px;margin:0 auto;padding:28px 24px 16px">
-  <div class="stat-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px">
-    <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px"><div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:6px">Documents</div><div style="font-size:28px;font-weight:700;color:var(--text)">13</div></div>
-    <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px"><div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:6px">Last Review</div><div style="font-size:18px;font-weight:600;color:var(--text);font-family:'DM Mono',monospace">30/03/2026</div></div>
-    <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px"><div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:6px">Next Review</div><div style="font-size:18px;font-weight:600;color:var(--green);font-family:'DM Mono',monospace">30/03/2027</div></div>
-    <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px"><div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:6px">Staff Confirmations</div><a href="GYMGEEK_ACK_LOG.html" style="font-size:18px;font-weight:600;color:var(--green);font-family:'DM Mono',monospace;text-decoration:none">View log →</a></div>
-  </div>
-</div>
-
-<!-- Action bar -->
-<div class="action-bar">
-  <button class="action-btn blue" onclick="openModal()">
-    <span class="action-btn-icon">🔗</span>
-    Share work experience docs
-  </button>
-  <a class="action-btn green" href="https://github.com/gymgeekweymouth/-gymgeek-documents" target="_blank">
-    <span class="action-btn-icon">↗</span>
-    Open GitHub repo
+<div class="topbar">
+  <div class="topbar-brand">GYMGEEK</div>
+  <a href="index.html" class="back-nav" title="Back to document portal">
+    <span class="back-nav-arrow">←</span> All Documents
   </a>
+  <div class="topbar-divider"></div>
+  <div class="topbar-title">Staff Acknowledgement Log</div>
+  <div class="topbar-meta">Auto-updated when staff confirm documents</div>
 </div>
 
-<div class="portal-grid"><a href="GYMGEEK_RA_GENERAL_2026.html" class="doc-card"><span class="doc-card-type" style="color:var(--fail-txt);background:var(--fail-bg);border-color:var(--fail-border)">Risk Assessment</span><span class="doc-card-title">General Risk Assessment</span><span style="font-size:11px;color:var(--muted);line-height:1.5;display:block">14 hazards · all areas of gym operations</span><span class="doc-card-meta">v2 &nbsp;·&nbsp; 30/03/2026</span><span class="doc-card-arrow">→</span></a><a href="GYMGEEK_RA_FIRE_2026.html" class="doc-card"><span class="doc-card-type" style="color:var(--fail-txt);background:var(--fail-bg);border-color:var(--fail-border)">Risk Assessment</span><span class="doc-card-title">Fire Risk Assessment</span><span style="font-size:11px;color:var(--muted);line-height:1.5;display:block">8 hazards · RR(FS)O 2005 compliant</span><span class="doc-card-meta">v1 &nbsp;·&nbsp; 30/03/2026</span><span class="doc-card-arrow">→</span></a><a href="GYMGEEK_RA_MANUAL_HANDLING_2026.html" class="doc-card"><span class="doc-card-type" style="color:var(--fail-txt);background:var(--fail-bg);border-color:var(--fail-border)">Risk Assessment</span><span class="doc-card-title">Manual Handling</span><span style="font-size:11px;color:var(--muted);line-height:1.5;display:block">6 hazards · Manual Handling Regs 1992</span><span class="doc-card-meta">v1 &nbsp;·&nbsp; 30/03/2026</span><span class="doc-card-arrow">→</span></a><a href="GYMGEEK_RA_LONE_WORKING_2026.html" class="doc-card"><span class="doc-card-type" style="color:var(--fail-txt);background:var(--fail-bg);border-color:var(--fail-border)">Risk Assessment</span><span class="doc-card-title">Lone Working</span><span style="font-size:11px;color:var(--muted);line-height:1.5;display:block">6 hazards · includes medium-rated aggression</span><span class="doc-card-meta">v1 &nbsp;·&nbsp; 30/03/2026</span><span class="doc-card-arrow">→</span></a><a href="GYMGEEK_RA_COSHH_2026.html" class="doc-card"><span class="doc-card-type" style="color:var(--fail-txt);background:var(--fail-bg);border-color:var(--fail-border)">Risk Assessment</span><span class="doc-card-title">COSHH — Cleaning Products</span><span style="font-size:11px;color:var(--muted);line-height:1.5;display:block">6 hazards · COSHH Regs 2002</span><span class="doc-card-meta">v1 &nbsp;·&nbsp; 30/03/2026</span><span class="doc-card-arrow">→</span></a><a href="GYMGEEK_RA_YOUNG_PERSONS_2026.html" class="doc-card"><span class="doc-card-type" style="color:var(--fail-txt);background:var(--fail-bg);border-color:var(--fail-border)">Risk Assessment</span><span class="doc-card-title">Young Persons (Under 16s)</span><span style="font-size:11px;color:var(--muted);line-height:1.5;display:block">5 hazards · members under 16 in sessions</span><span class="doc-card-meta">v1 &nbsp;·&nbsp; 30/03/2026</span><span class="doc-card-arrow">→</span></a><a href="GYMGEEK_RA_UNDER18_WORKEXP_2026.html" class="doc-card"><span class="doc-card-type" style="color:var(--fail-txt);background:var(--fail-bg);border-color:var(--fail-border)">Risk Assessment</span><span class="doc-card-title">Under 18s Work Experience</span><span style="font-size:11px;color:var(--muted);line-height:1.5;display:block">6 hazards · work placement students</span><span class="doc-card-meta">v1 &nbsp;·&nbsp; 30/03/2026</span><span class="doc-card-arrow">→</span></a><a href="GYMGEEK_FIRE_LOGBOOK_2026.html" class="doc-card"><span class="doc-card-type" style="color:var(--amber);background:var(--med-bg);border-color:var(--med-border)">Compliance Record</span><span class="doc-card-title">Fire Safety Logbook</span><span style="font-size:11px;color:var(--muted);line-height:1.5;display:block">6 log sections · pre-filled 2026 records</span><span class="doc-card-meta">v1 &nbsp;·&nbsp; 30/03/2026</span><span class="doc-card-arrow">→</span></a><a href="GYMGEEK_MAINTENANCE_2026.html" class="doc-card"><span class="doc-card-type" style="color:var(--pass-txt);background:var(--pass-bg);border-color:var(--pass-border)">Maintenance Log</span><span class="doc-card-title">GymGeek Weekly Maintenance</span><span style="font-size:11px;color:var(--muted);line-height:1.5;display:block">27 checks · 12 monthly tabs · add/delete rows</span><span class="doc-card-meta">v1 &nbsp;·&nbsp; 2026</span><span class="doc-card-arrow">→</span></a><a href="COMPASSPOINT_MAINTENANCE_2026.html" class="doc-card"><span class="doc-card-type" style="color:var(--pass-txt);background:var(--pass-bg);border-color:var(--pass-border)">Maintenance Log</span><span class="doc-card-title">Compass Point Monthly Check</span><span style="font-size:11px;color:var(--muted);line-height:1.5;display:block">11 checks · 12 monthly tabs · pre-filled</span><span class="doc-card-meta">v1 &nbsp;·&nbsp; 2026</span><span class="doc-card-arrow">→</span></a><a href="GYMGEEK_POLICY_ANTIBULLYING_2026.html" class="doc-card"><span class="doc-card-type" style="color:var(--blue);background:rgba(119,143,221,0.12);border-color:rgba(119,143,221,0.3)">Policy</span><span class="doc-card-title">Anti-Bullying Policy</span><span style="font-size:11px;color:var(--muted);line-height:1.5;display:block">Full policy · staff read confirmation</span><span class="doc-card-meta">v2 &nbsp;·&nbsp; 30/03/2026</span><span class="doc-card-arrow">→</span></a><a href="GYMGEEK_POLICY_GDPR_2026.html" class="doc-card"><span class="doc-card-type" style="color:var(--blue);background:rgba(119,143,221,0.12);border-color:rgba(119,143,221,0.3)">Policy</span><span class="doc-card-title">GDPR & Data Protection Policy</span><span style="font-size:11px;color:var(--muted);line-height:1.5;display:block">Full policy · staff read confirmation</span><span class="doc-card-meta">v4 &nbsp;·&nbsp; 30/03/2026</span><span class="doc-card-arrow">→</span></a><a href="GYMGEEK_ACK_LOG.html" class="doc-card"><span class="doc-card-type" style="color:var(--amber);background:var(--med-bg);border-color:var(--med-border)">Compliance Record</span><span class="doc-card-title">Staff Acknowledgement Log</span><span style="font-size:11px;color:var(--muted);line-height:1.5;display:block">Auto-updated · all read confirmations</span><span class="doc-card-meta">v1 &nbsp;·&nbsp; Live</span><span class="doc-card-arrow">→</span></a></div>
+<div class="doc-wrap">
+  <div class="doc-header">
+    <div class="doc-title-row">
+      <div>
+        <div class="doc-wordmark">GYMGEEK</div>
+        <div class="doc-subtitle">Staff Document Acknowledgement Log</div>
+      </div>
+      <span class="doc-type-badge">Compliance Record</span>
+    </div>
+    <div class="doc-meta-grid">
+      <div class="doc-meta-item"><span class="doc-meta-label">Premises</span><span class="doc-meta-value">15 Cambridge Road, Weymouth, DT4 9TJ</span></div>
+      <div class="doc-meta-item"><span class="doc-meta-label">Purpose</span><span class="doc-meta-value">H&S document read confirmations</span></div>
+      <div class="doc-meta-item"><span class="doc-meta-label">Auto-updated</span><span class="doc-meta-value">Yes — via confirm buttons</span></div>
+      <div class="doc-meta-item"><span class="doc-meta-label">Total Confirmations</span><span class="doc-meta-value" id="total-count">Loading…</span></div>
+    </div>
+  </div>
+
+  <div class="doc-table-wrap">
+
+    <div class="filter-bar">
+      <span class="filter-label">Filter by name</span>
+      <input type="text" class="filter-input" id="filter-name" placeholder="e.g. Connor Ryan" oninput="filterTable()">
+      <span class="filter-label" style="margin-left:8px">Filter by document</span>
+      <input type="text" class="filter-input" id="filter-doc" placeholder="e.g. GDPR" oninput="filterTable()">
+      <span class="ack-count" id="showing-count"></span>
+    </div>
+
+    <div id="ack-content">
+      <div class="ack-loading">Loading acknowledgements…</div>
+    </div>
+
+    <div class="green-stripe"></div>
+    <div class="doc-footer">
+      <div class="doc-footer-cell"><label>Data Source</label><span>acknowledgements.json in GitHub repo</span></div>
+      <div class="doc-footer-cell"><label>Repo</label><span style="font-family:'DM Mono',monospace;font-size:11px">gymgeekweymouth/-gymgeek-documents</span></div>
+      <div class="doc-footer-cell"><label>Loaded</label><span id="loaded-time">—</span></div>
+      <div class="doc-footer-cell"><label>Version History</label><span>Available in GitHub file history</span></div>
+    </div>
+  </div>
+</div>
 
 <div class="brand-footer">
   <div class="brand-footer-dot"></div>
@@ -1227,40 +1200,403 @@ tr:hover .del-row-btn { display: flex; }
   <span class="brand-footer-detail">gymgeekonline.co.uk &nbsp;·&nbsp; athleek.co.uk &nbsp;·&nbsp; Unit 1B, 15 Cambridge Road, Weymouth, DT4 9TJ</span>
 </div>
 
-<script>
-function openModal() {
-  document.getElementById('share-modal').classList.add('visible');
-}
-function closeModal() {
-  document.getElementById('share-modal').classList.remove('visible');
-}
-document.getElementById('share-modal').addEventListener('click', function(e) {
-  if (e.target === this) closeModal();
-});
+<script>// ── GymGeek Document Core ──────────────────────────────────────────────────
+// Save engine for gymgeekweymouth/-gymgeek-documents
 
-function copyUrl(idx, url) {
-  navigator.clipboard.writeText(url).then(() => {
-    const btn = document.querySelectorAll('.share-copy-btn')[idx];
-    btn.textContent = '✓ Copied';
-    btn.classList.add('copied');
-    setTimeout(() => { btn.textContent = 'Copy link'; btn.classList.remove('copied'); }, 2000);
+const GITHUB_OWNER = "gymgeekweymouth";
+const GITHUB_REPO  = "-gymgeek-documents";
+const GITHUB_API   = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/`;
+
+let _token = null;
+function getToken() { return _token; }
+
+function promptToken() {
+  return new Promise(resolve => {
+    const overlay = document.getElementById('token-overlay');
+    overlay.classList.add('visible');
+    document.getElementById('token-submit').onclick = () => {
+      const val = document.getElementById('token-input').value.trim();
+      if (val) { _token = val; overlay.classList.remove('visible'); resolve(val); }
+    };
+    document.getElementById('token-input').onkeydown = e => {
+      if (e.key === 'Enter') document.getElementById('token-submit').click();
+    };
+    setTimeout(() => document.getElementById('token-input').focus(), 100);
   });
 }
 
-function copyAll() {
-  const urls = [
-    "https://gymgeekweymouth.github.io/-gymgeek-documents/GYMGEEK_RA_UNDER18_WORKEXP_2026.html", "https://gymgeekweymouth.github.io/-gymgeek-documents/GYMGEEK_RA_YOUNG_PERSONS_2026.html", "https://gymgeekweymouth.github.io/-gymgeek-documents/GYMGEEK_POLICY_ANTIBULLYING_2026.html", "https://gymgeekweymouth.github.io/-gymgeek-documents/GYMGEEK_RA_GENERAL_2026.html", "https://gymgeekweymouth.github.io/-gymgeek-documents/GYMGEEK_POLICY_GDPR_2026.html"
-  ];
-  const labels = [
-    "Under 18s Work Experience Risk Assessment", "Young Persons Risk Assessment (Under 16s)", "Anti-Bullying Policy", "General Risk Assessment", "GDPR & Data Protection Policy"
-  ];
-  const text = labels.map((l, i) => l + '\n' + urls[i]).join('\n\n');
-  navigator.clipboard.writeText(text).then(() => {
-    const btn = document.getElementById('copy-all-btn');
-    btn.textContent = '✓ All links copied to clipboard';
-    btn.classList.add('copied');
-    setTimeout(() => { btn.textContent = 'Copy all links to clipboard'; btn.classList.remove('copied'); }, 3000);
+async function saveDocument() {
+  const btn    = document.getElementById('save-btn');
+  const status = document.getElementById('save-status');
+
+  let token = getToken();
+  if (!token) token = await promptToken();
+  if (!token) return;
+
+  btn.disabled = true;
+  btn.innerHTML = `<span class="spin">⟳</span> Saving…`;
+  status.textContent = '';
+
+  // Stamp saved time into the doc
+  const tsEl = document.getElementById('last-saved');
+  const saveTime = new Date().toLocaleString('en-GB');
+  if (tsEl) tsEl.textContent = saveTime;
+
+  const filename = document.body.dataset.filename;
+
+  // Serialise the current live DOM — this captures all edits,
+  // checked checkboxes, and filled-in fields
+  const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+
+  // btoa can't handle multi-byte chars — use TextEncoder + Uint8Array approach
+  const bytes = new TextEncoder().encode(html);
+  let binary  = '';
+  bytes.forEach(b => binary += String.fromCharCode(b));
+  const encoded = btoa(binary);
+
+  // Fetch current SHA — required by GitHub API to update an existing file.
+  // Add cache-bust so we always get the live SHA, not a CDN-cached response.
+  let sha = null;
+  try {
+    const r = await fetch(GITHUB_API + filename + '?t=' + Date.now(), {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: 'application/vnd.github+json',
+        'Cache-Control': 'no-cache'
+      }
+    });
+    if (r.ok) {
+      const d = await r.json();
+      sha = d.sha;
+    } else if (r.status === 401) {
+      throw new Error('Invalid token — check your Personal Access Token has repo scope.');
+    } else if (r.status === 404) {
+      // File doesn't exist yet — first upload, no SHA needed
+      sha = null;
+    }
+  } catch(e) {
+    if (e.message.includes('Invalid token')) {
+      btn.innerHTML = `✗ Error`;
+      btn.classList.add('error');
+      status.textContent = e.message;
+      btn.disabled = false;
+      setTimeout(() => { btn.innerHTML = `💾 Save`; btn.classList.remove('error'); }, 5000);
+      return;
+    }
+  }
+
+  const body = {
+    message: `Update ${filename} — ${saveTime}`,
+    content: encoded,
+    ...(sha ? { sha } : {})
+  };
+
+  try {
+    const res = await fetch(GITHUB_API + filename, {
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: 'application/vnd.github+json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(body)
+    });
+
+    if (res.ok) {
+      btn.innerHTML = `✓ Saved`;
+      btn.classList.add('saved');
+      status.textContent = `Saved ${saveTime}`;
+      setTimeout(() => {
+        btn.innerHTML = `💾 Save`;
+        btn.disabled = false;
+        btn.classList.remove('saved');
+      }, 3000);
+    } else {
+      const err = await res.json();
+      // 409 = SHA conflict (someone else saved between our fetch and PUT)
+      if (res.status === 409) {
+        throw new Error('Conflict — someone else saved this document. Reload and re-enter your changes.');
+      }
+      throw new Error(err.message || `HTTP ${res.status}`);
+    }
+  } catch(e) {
+    btn.innerHTML = `✗ Error`;
+    btn.classList.add('error');
+    status.textContent = `Save failed: ${e.message}`;
+    btn.disabled = false;
+    setTimeout(() => { btn.innerHTML = `💾 Save`; btn.classList.remove('error'); }, 6000);
+  }
+}
+
+// Toggle ✓ / ✗ / — / blank on result cells
+function toggleResult(el) {
+  const states = ['', '✓', '✗', '—'];
+  const cur  = states.indexOf(el.dataset.state || '');
+  const next = states[(cur + 1) % states.length];
+  el.dataset.state  = next;
+  el.textContent    = next;
+  el.className = 'result-cell ' + ({ '✓':'pass','✗':'fail','—':'na','':'blank' }[next]);
+}
+
+// Make elements contenteditable
+function makeEditable(selector) {
+  document.querySelectorAll(selector).forEach(el => {
+    el.contentEditable = 'true';
+    el.spellcheck = false;
+    el.addEventListener('keydown', e => {
+      if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); el.blur(); }
+    });
   });
+}
+
+// ── Row management ─────────────────────────────────────────────────────────
+
+// Add a new editable row to a table. tableId identifies which table to target.
+// colDefs: array of {type:'text'|'result'|'rating'|'checkbox'|'del', width?}
+function addRow(tableId, colDefs) {
+  const table = document.getElementById(tableId);
+  if (!table) return;
+  const tbody = table.querySelector('tbody');
+  const rows  = tbody.querySelectorAll('tr');
+  const idx   = rows.length;
+
+  const tr = document.createElement('tr');
+  tr.classList.add('new-row');
+
+  colDefs.forEach(def => {
+    const td = document.createElement('td');
+    if (def.width) td.style.width = def.width;
+
+    if (def.type === 'text') {
+      td.contentEditable = 'true';
+      td.spellcheck = false;
+      td.style.fontSize = '12px';
+      td.addEventListener('keydown', e => {
+        if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); td.blur(); }
+      });
+
+    } else if (def.type === 'result') {
+      td.style.textAlign = 'center';
+      td.style.verticalAlign = 'middle';
+      const span = document.createElement('span');
+      span.className = 'result-cell blank';
+      span.dataset.state = '';
+      span.addEventListener('click', () => toggleResult(span));
+      td.appendChild(span);
+
+    } else if (def.type === 'rating') {
+      td.style.textAlign = 'center';
+      td.style.verticalAlign = 'middle';
+      const span = document.createElement('span');
+      span.className = 'pill low rating-badge';
+      span.dataset.r = 'low';
+      span.textContent = '✓ Low';
+      span.style.cursor = 'pointer';
+      span.title = 'Click to cycle rating';
+      span.addEventListener('click', () => {
+        const cycle = {low:'med', med:'high', high:'low'};
+        const labels = {low:'✓ Low', med:'▲ Med', high:'✗ High'};
+        const next = cycle[span.dataset.r];
+        span.dataset.r = next;
+        span.className = 'pill ' + next + ' rating-badge';
+        span.textContent = labels[next];
+      });
+      td.appendChild(span);
+
+    } else if (def.type === 'checkbox') {
+      td.className = 'cb-cell';
+      const wrap = document.createElement('div');
+      wrap.className = 'cb-wrap';
+      const cb = document.createElement('input');
+      cb.type = 'checkbox';
+      cb.addEventListener('change', () => {
+        td.classList.toggle('cb-checked', cb.checked);
+      });
+      wrap.appendChild(cb);
+      td.appendChild(wrap);
+
+    } else if (def.type === 'del') {
+      td.className = 'del-cell';
+      const btn = document.createElement('button');
+      btn.className = 'del-row-btn';
+      btn.innerHTML = '×';
+      btn.title = 'Delete this row';
+      btn.addEventListener('click', () => {
+        if (confirm('Delete this row?')) tr.remove();
+      });
+      td.appendChild(btn);
+    }
+
+    tr.appendChild(td);
+  });
+
+  tbody.appendChild(tr);
+
+  // Focus the first text cell
+  const firstText = tr.querySelector('[contenteditable]');
+  if (firstText) { firstText.focus(); }
+
+  // Remove highlight after animation
+  setTimeout(() => tr.classList.remove('new-row'), 1200);
+}
+
+// Initialise delete buttons on all existing rows in a table
+function initDeleteButtons(tableId, delColIndex) {
+  const table = document.getElementById(tableId);
+  if (!table) return;
+  table.querySelectorAll('tbody tr').forEach(tr => {
+    // skip rows that already have a del cell
+    if (tr.querySelector('.del-row-btn')) return;
+    const td = document.createElement('td');
+    td.className = 'del-cell';
+    const btn = document.createElement('button');
+    btn.className = 'del-row-btn';
+    btn.innerHTML = '×';
+    btn.title = 'Delete this row';
+    btn.addEventListener('click', () => {
+      if (confirm('Delete this row?')) tr.remove();
+    });
+    td.appendChild(btn);
+    tr.appendChild(td);
+  });
+  // Add del header cell if not present
+  const thead = table.querySelector('thead tr');
+  if (thead && !thead.querySelector('.del-cell')) {
+    const th = document.createElement('th');
+    th.className = 'del-cell';
+    th.style.width = '32px';
+    thead.appendChild(th);
+  }
+}
+
+// ── Document acknowledgement ───────────────────────────────────────────────
+// Saves a read confirmation to acknowledgements.json in the repo.
+// Uses a fine-grained token embedded in the page (set via CONFIRM_TOKEN const).
+
+async function confirmRead(docName, staffName, token) {
+  const api = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/acknowledgements.json`;
+  const ts  = new Date().toLocaleString('en-GB');
+
+  // Fetch current acknowledgements.json
+  let current = [];
+  let sha = null;
+  try {
+    const r = await fetch(api + '?t=' + Date.now(), {
+      headers: { Authorization: `Bearer ${token}`, Accept: 'application/vnd.github+json', 'Cache-Control': 'no-cache' }
+    });
+    if (r.ok) {
+      const d = await r.json();
+      sha = d.sha;
+      const decoded = decodeURIComponent(escape(atob(d.content.replace(/\n/g,''))));
+      current = JSON.parse(decoded);
+    }
+  } catch(e) { current = []; }
+
+  // Append new entry
+  current.push({ name: staffName, document: docName, confirmed: ts, timestamp: Date.now() });
+
+  // Save back
+  const bytes = new TextEncoder().encode(JSON.stringify(current, null, 2));
+  let binary = '';
+  bytes.forEach(b => binary += String.fromCharCode(b));
+  const encoded = btoa(binary);
+
+  const res = await fetch(api, {
+    method: 'PUT',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/vnd.github+json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      message: `${staffName} confirmed reading ${docName} — ${ts}`,
+      content: encoded,
+      ...(sha ? { sha } : {})
+    })
+  });
+
+  return res.ok;
 }
 </script>
-</body></html>
+<script>
+const CONFIRM_TOKEN = "PASTE_YOUR_FINE_GRAINED_TOKEN_HERE";
+let allEntries = [];
+
+async function loadAck() {
+  const api = `https://api.github.com/repos/gymgeekweymouth/-gymgeek-documents/contents/acknowledgements.json?t=${Date.now()}`;
+  try {
+    const r = await fetch(api, {
+      headers: {
+        Authorization: `Bearer ${CONFIRM_TOKEN}`,
+        Accept: 'application/vnd.github+json',
+        'Cache-Control': 'no-cache'
+      }
+    });
+    if (!r.ok) {
+      if (r.status === 404) {
+        renderEmpty('No acknowledgements recorded yet. Staff confirmations will appear here once they confirm reading a document.');
+      } else if (r.status === 401) {
+        renderEmpty('Token error — check CONFIRM_TOKEN is set correctly in this file.');
+      } else {
+        renderEmpty('Could not load acknowledgements (HTTP ' + r.status + ').');
+      }
+      return;
+    }
+    const d = await r.json();
+    const decoded = decodeURIComponent(escape(atob(d.content.replace(/\n/g,''))));
+    allEntries = JSON.parse(decoded);
+    document.getElementById('total-count').textContent = allEntries.length + ' confirmations';
+    document.getElementById('loaded-time').textContent = new Date().toLocaleString('en-GB');
+    renderTable(allEntries);
+  } catch(e) {
+    renderEmpty('Error loading acknowledgements: ' + e.message);
+  }
+}
+
+function renderEmpty(msg) {
+  document.getElementById('total-count').textContent = '0';
+  document.getElementById('ack-content').innerHTML = `<div class="ack-empty">${msg}</div>`;
+}
+
+function renderTable(entries) {
+  if (!entries.length) {
+    renderEmpty('No acknowledgements recorded yet.');
+    return;
+  }
+  // Sort newest first
+  const sorted = [...entries].sort((a,b) => (b.timestamp||0)-(a.timestamp||0));
+  const rows = sorted.map((e, i) => {
+    const bg = i % 2 !== 0 ? ' style="background:rgba(255,255,255,0.015)"' : '';
+    return `<tr>
+      <td${bg} style="font-size:12px;font-weight:500">${e.name || '—'}</td>
+      <td${bg} style="font-size:12px">${e.document || '—'}</td>
+      <td${bg} style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted)">${e.confirmed || '—'}</td>
+    </tr>`;
+  }).join('');
+  document.getElementById('ack-content').innerHTML = `
+    <table>
+      <thead><tr>
+        <th style="width:25%">Staff Member</th>
+        <th style="width:45%">Document</th>
+        <th style="width:30%">Confirmed</th>
+      </tr></thead>
+      <tbody>${rows}</tbody>
+    </table>`;
+  document.getElementById('showing-count').textContent = sorted.length + ' records';
+}
+
+function filterTable() {
+  const name = document.getElementById('filter-name').value.toLowerCase();
+  const doc  = document.getElementById('filter-doc').value.toLowerCase();
+  const filtered = allEntries.filter(e =>
+    (!name || (e.name||'').toLowerCase().includes(name)) &&
+    (!doc  || (e.document||'').toLowerCase().includes(doc))
+  );
+  renderTable(filtered);
+  document.getElementById('showing-count').textContent = filtered.length + ' records';
+}
+
+loadAck();
+</script>
+</body>
+</html>
