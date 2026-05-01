@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-cache,no-store,must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<title>GymGeek | COSHH Risk Assessment</title>
+<style>@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@1,900&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap');
+
+/* ── Variables ──────────────────────────────────────────────────────────── */
+:root {
+  --bg:         #2A2D30;
+  --card:       #27292B;
+  --card2:      #2f3235;
+  --border:     #3a3d40;
+  --border-s:   rgba(255,255,255,0.06);
+  --green:      #61C599;
+  --green-d:    #1a9e6a;
+  --amber:      #FFC11E;
+  --blue:       #778FDD;
+  --red:        #ff6363;
+  --text:       #f0f4ff;
+  --muted:      #7a8ba8;
+  --pass-bg:    rgba(97,197,153,0.12);
+  --pass-txt:   #61C599;
+  --pass-bdr:   rgba(97,197,153,0.3);
+  --fail-bg:    rgba(255,99,99,0.12);
+  --fail-txt:   #ff6363;
+  --fail-bdr:   rgba(255,99,99,0.3);
+  --med-bg:     rgba(255,193,30,0.12);
+  --med-txt:    #FFC11E;
+  --med-bdr:    rgba(255,193,30,0.3);
+  --r: 10px;
+  --r-s: 6px;
+}
+
+/* ── Reset ──────────────────────────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);background:var(--bg);min-height:100vh;padding-bottom:80px;line-height:1.6}
+
+/* ── Topbar ─────────────────────────────────────────────────────────────── */
+.topbar{position:sticky;top:0;z-index:100;background:var(--card);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;padding:0 24px;height:52px;box-shadow:0 2px 16px rgba(0,0,0,0.35)}
+.topbar-brand{font-family:'Raleway',sans-serif;font-style:italic;font-weight:900;font-size:18px;color:var(--text);text-transform:uppercase;flex-shrink:0}
+.topbar-divider{width:1px;height:18px;background:var(--border);flex-shrink:0}
+.topbar-title{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.topbar-meta{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);flex-shrink:0;white-space:nowrap}
+.back-nav{display:inline-flex;align-items:center;gap:5px;padding:4px 12px 4px 8px;background:var(--card2);border:1px solid var(--border);border-radius:20px;font-size:11px;color:var(--muted);text-decoration:none;flex-shrink:0;transition:color 0.15s,border-color 0.15s}
+.back-nav:hover{color:var(--text);border-color:var(--green)}
+.topbar-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 16px;border-radius:var(--r-s);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;cursor:pointer;border:none;flex-shrink:0;transition:opacity 0.15s,transform 0.1s}
+.topbar-btn:hover{opacity:0.88;transform:translateY(-1px)}
+.topbar-btn:disabled{opacity:0.5;cursor:wait;transform:none}
+.btn-save{background:var(--green);color:var(--bg)}
+.btn-save.saved{background:var(--pass-bg);color:var(--pass-txt);border:1px solid var(--pass-bdr)}
+.btn-save.error{background:var(--fail-bg);color:var(--fail-txt);border:1px solid var(--fail-bdr)}
+.btn-pdf{background:var(--card2);color:var(--muted);border:1px solid var(--border)}
+.btn-pdf:hover{color:var(--text);border-color:var(--text)}
+.save-status{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);flex-shrink:0}
+.spin{display:inline-block;animation:spin 0.7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ── Doc wrapper ────────────────────────────────────────────────────────── */
+.wrap{max-width:1160px;margin:28px auto;padding:0 20px}
+
+/* ── Doc header ─────────────────────────────────────────────────────────── */
+.doc-hdr{background:var(--card);border:1px solid var(--border);border-radius:var(--r) var(--r) 0 0;padding:28px 32px 24px;position:relative;overflow:hidden}
+.doc-hdr::before{content:'';position:absolute;top:-60px;right:-60px;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(97,197,153,0.05) 0%,transparent 70%);pointer-events:none}
+.doc-wordmark{font-family:'Raleway',sans-serif;font-style:italic;font-weight:900;font-size:28px;color:var(--text);text-transform:uppercase;line-height:1}
+.doc-sub{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-top:6px}
+.doc-hdr-row{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.doc-badge{display:inline-flex;align-items:center;padding:4px 14px;border-radius:20px;font-size:9px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;border:2px solid;flex-shrink:0;margin-top:4px}
+.badge-ra{color:var(--fail-txt);background:var(--fail-bg);border-color:var(--fail-bdr)}
+.badge-policy{color:var(--blue);background:rgba(119,143,221,0.1);border-color:rgba(119,143,221,0.3)}
+.badge-maint{color:var(--pass-txt);background:var(--pass-bg);border-color:var(--pass-bdr)}
+.badge-compliance{color:var(--amber);background:var(--med-bg);border-color:var(--med-bdr)}
+.meta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));background:var(--card2);border:1px solid var(--border-s);border-radius:var(--r-s);overflow:hidden;margin-top:20px}
+.meta-cell{padding:10px 14px;border-right:1px solid var(--border-s);border-bottom:1px solid var(--border-s)}
+.meta-label{font-family:'DM Mono',monospace;font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);display:block;margin-bottom:3px}
+.meta-val{font-size:12px;font-weight:500;color:var(--text)}
+[contenteditable]:focus{outline:2px solid var(--green);outline-offset:2px;border-radius:3px;background:rgba(97,197,153,0.05)}
+
+/* ── Table wrapper ──────────────────────────────────────────────────────── */
+.tbl-wrap{background:var(--card);border:1px solid var(--border);border-top:none;border-radius:0 0 var(--r) var(--r);overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.3)}
+table{width:100%;border-collapse:collapse}
+thead th{background:var(--card2);color:var(--muted);font-family:'DM Sans',sans-serif;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;padding:9px 12px;text-align:left;border-bottom:1px solid var(--border);border-right:1px solid var(--border-s);white-space:nowrap}
+thead th:last-child{border-right:none}
+thead th.center{text-align:center}
+tbody tr{border-bottom:1px solid var(--border-s)}
+tbody tr:last-child{border-bottom:none}
+tbody tr:nth-child(even) td{background:rgba(255,255,255,0.015)}
+tbody tr:hover td{background:rgba(97,197,153,0.04);transition:background 0.1s}
+td{padding:9px 12px;border-right:1px solid var(--border-s);vertical-align:top;font-size:12px;color:var(--text);line-height:1.5}
+td:last-child{border-right:none}
+
+/* ── Rating pills ───────────────────────────────────────────────────────── */
+.pill{display:inline-flex;align-items:center;padding:3px 11px;border-radius:20px;font-size:9px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;border:2px solid;cursor:pointer;user-select:none;transition:opacity 0.15s,transform 0.1s;white-space:nowrap}
+.pill:hover{opacity:0.85;transform:scale(1.04)}
+.pill.low{color:var(--pass-txt);background:var(--pass-bg);border-color:var(--pass-bdr)}
+.pill.med{color:var(--med-txt);background:var(--med-bg);border-color:var(--med-bdr)}
+.pill.high{color:var(--fail-txt);background:var(--fail-bg);border-color:var(--fail-bdr)}
+
+/* ── Result cells ───────────────────────────────────────────────────────── */
+.rc{display:inline-block;font-family:'DM Mono',monospace;font-size:14px;font-weight:500;cursor:pointer;user-select:none;padding:4px 8px;border-radius:var(--r-s);min-width:34px;text-align:center;transition:transform 0.1s}
+.rc:hover{transform:scale(1.15)}
+.rc.pass{background:var(--pass-bg);color:var(--pass-txt);border:1px solid var(--pass-bdr)}
+.rc.fail{background:var(--fail-bg);color:var(--fail-txt);border:1px solid var(--fail-bdr)}
+.rc.na{background:rgba(255,255,255,0.04);color:var(--muted);border:1px solid var(--border-s)}
+.rc.blank{background:rgba(255,255,255,0.02);color:var(--border);border:1px solid var(--border-s)}
+
+/* ── Checkbox ───────────────────────────────────────────────────────────── */
+.cb-wrap{display:flex;align-items:center;justify-content:center;padding:3px}
+.cb-wrap input[type=checkbox]{width:16px;height:16px;cursor:pointer;accent-color:var(--green)}
+td.cb-checked{background:rgba(97,197,153,0.08)!important}
+
+/* ── Add / delete row ───────────────────────────────────────────────────── */
+.add-row-btn{display:flex;align-items:center;gap:8px;padding:9px 14px;background:transparent;border:none;border-top:1px solid var(--border-s);width:100%;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;color:var(--green);text-transform:uppercase;letter-spacing:0.06em;transition:background 0.15s}
+.add-row-btn:hover{background:rgba(97,197,153,0.06)}
+.add-row-btn .plus{width:18px;height:18px;border-radius:50%;background:rgba(97,197,153,0.15);border:1px solid rgba(97,197,153,0.3);display:flex;align-items:center;justify-content:center;font-size:13px;line-height:1;flex-shrink:0}
+.del-btn{display:none;width:20px;height:20px;border-radius:50%;background:transparent;border:1px solid transparent;cursor:pointer;font-size:13px;color:var(--muted);align-items:center;justify-content:center;padding:0;line-height:1;transition:background 0.1s,color 0.1s}
+.del-btn:hover{background:var(--fail-bg);color:var(--fail-txt);border-color:var(--fail-bdr)}
+tr:hover .del-btn{display:flex}
+td.del-cell{width:32px;text-align:center;vertical-align:middle;padding:0 4px!important;border-right:none!important}
+@keyframes rowpop{from{background:rgba(97,197,153,0.1)}to{background:transparent}}
+.new-row td{animation:rowpop 1s ease forwards}
+
+/* ── Section heading ────────────────────────────────────────────────────── */
+.sec-head{display:flex;align-items:center;gap:10px;padding:10px 16px;background:var(--card2);border-bottom:1px solid var(--border-s)}
+.sec-head-dot{width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0}
+.sec-head-title{font-size:9px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--text)}
+.sec-head-line{flex:1;height:1px;background:var(--border)}
+.sec-head-note{font-size:9px;color:var(--muted);font-family:'DM Mono',monospace}
+
+/* ── Tabs ───────────────────────────────────────────────────────────────── */
+.tab-bar{display:flex;flex-wrap:wrap;background:var(--card2);border-bottom:1px solid var(--border);padding:0 12px}
+.tab{padding:10px 14px;font-size:11px;font-weight:500;cursor:pointer;color:var(--muted);border-bottom:2px solid transparent;margin-bottom:-1px;user-select:none;transition:color 0.15s;white-space:nowrap}
+.tab:hover{color:var(--text)}
+.tab.active{color:var(--green);border-bottom-color:var(--green);font-weight:600}
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+
+/* ── Sign-off row ───────────────────────────────────────────────────────── */
+.signoff-row td{background:rgba(97,197,153,0.04)!important;border-top:1px solid rgba(97,197,153,0.2)!important}
+.signoff-row td:first-child{font-family:'DM Mono',monospace;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--green);vertical-align:middle}
+.sf-label{display:block;font-family:'DM Mono',monospace;font-size:8px;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:3px}
+.sf-val{display:block;font-size:12px;color:var(--text);outline:none;border-bottom:1px solid transparent;transition:border-color 0.15s;min-height:16px}
+.sf-val:focus{border-bottom-color:var(--green)}
+
+/* ── Doc footer ─────────────────────────────────────────────────────────── */
+.doc-footer{background:var(--card2);border-top:1px solid var(--border);display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.doc-footer-cell{padding:10px 14px;border-right:1px solid var(--border-s);display:flex;flex-direction:column;gap:3px}
+.doc-footer-cell:last-child{border-right:none}
+.doc-footer-cell label{font-family:'DM Mono',monospace;font-size:8px;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted)}
+.doc-footer-cell span{font-size:12px;font-weight:500;color:var(--text);min-height:17px}
+.doc-footer-cell span.green{color:var(--green);font-family:'DM Mono',monospace}
+
+/* ── Green stripe ───────────────────────────────────────────────────────── */
+.stripe{height:3px;background:var(--green)}
+
+/* ── Confirm banner ─────────────────────────────────────────────────────── */
+.confirm-wrap{background:var(--card2);border-top:2px solid rgba(119,143,221,0.35);padding:18px 24px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.confirm-text{flex:1;min-width:180px}
+.confirm-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:2px}
+.confirm-sub{font-size:11px;color:var(--muted)}
+.confirm-input{background:var(--card);border:1px solid var(--border);border-radius:var(--r-s);padding:9px 13px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);width:210px;outline:none;transition:border-color 0.15s;flex-shrink:0}
+.confirm-input:focus{border-color:var(--blue)}
+.confirm-input::placeholder{color:var(--muted)}
+.confirm-btn{display:inline-flex;align-items:center;gap:6px;padding:9px 20px;border-radius:var(--r-s);background:rgba(119,143,221,0.15);color:var(--blue);border:1px solid rgba(119,143,221,0.4);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:background 0.15s,transform 0.1s;flex-shrink:0;min-width:150px;justify-content:center;position:relative;overflow:hidden}
+.confirm-btn:hover:not(:disabled){background:rgba(119,143,221,0.25);transform:translateY(-1px)}
+.confirm-btn:disabled{opacity:0.6;cursor:not-allowed;transform:none}
+.confirm-btn.saving{background:rgba(255,255,255,0.04);color:var(--muted);border-color:var(--border)}
+.confirm-btn.done{background:var(--pass-bg);color:var(--pass-txt);border-color:var(--pass-bdr);cursor:default}
+.confirm-btn.err{background:var(--fail-bg);color:var(--fail-txt);border-color:var(--fail-bdr)}
+.confirm-status{font-family:'DM Mono',monospace;font-size:10px;min-width:140px;flex-shrink:0}
+.confirm-status.ok{color:var(--pass-txt)}
+.confirm-status.bad{color:var(--fail-txt)}
+.ripple{position:absolute;border-radius:50%;background:rgba(255,255,255,0.25);transform:scale(0);animation:rip 0.5s linear;pointer-events:none}
+@keyframes rip{to{transform:scale(4);opacity:0}}
+@keyframes pulse-green{0%{box-shadow:0 0 0 0 rgba(97,197,153,0.5)}70%{box-shadow:0 0 0 8px rgba(97,197,153,0)}100%{box-shadow:0 0 0 0 rgba(97,197,153,0)}}
+.confirm-btn.done{animation:pulse-green 0.6s ease}
+
+/* ── Token overlay ──────────────────────────────────────────────────────── */
+.token-overlay{position:fixed;inset:0;z-index:999;background:rgba(15,17,20,0.88);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.2s}
+.token-overlay.on{opacity:1;pointer-events:all}
+.token-box{background:var(--card);border:1px solid var(--border);border-top:3px solid var(--green);border-radius:var(--r);padding:32px 36px;max-width:460px;width:92%;box-shadow:0 32px 80px rgba(0,0,0,0.6)}
+.token-box h2{font-size:17px;font-weight:600;color:var(--text);margin-bottom:8px}
+.token-box p{font-size:12px;color:var(--muted);margin-bottom:18px;line-height:1.7}
+.token-box a{color:var(--green);text-decoration:none}
+.token-box a:hover{text-decoration:underline}
+.token-box input{width:100%;background:var(--card2);border:1px solid var(--border);border-radius:var(--r-s);padding:10px 13px;font-family:'DM Mono',monospace;font-size:12px;color:var(--text);margin-bottom:12px;outline:none;transition:border-color 0.15s}
+.token-box input:focus{border-color:var(--green)}
+.token-box button{width:100%;background:var(--green);color:var(--bg);border:none;border-radius:var(--r-s);padding:10px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;cursor:pointer}
+.token-box button:hover{opacity:0.88}
+.token-note{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);margin-top:10px;text-align:center}
+
+/* ── Brand footer ───────────────────────────────────────────────────────── */
+.brand-footer{max-width:1160px;margin:20px auto 0;padding:14px 20px;border-top:1px solid var(--border);display:flex;align-items:center;gap:8px}
+.brand-footer-dot{width:5px;height:5px;border-radius:50%;background:var(--green-d);flex-shrink:0}
+.brand-footer-name{font-family:'Raleway',sans-serif;font-style:italic;font-weight:900;font-size:11px;color:rgba(255,255,255,0.18);text-transform:uppercase}
+.brand-footer-addr{font-size:10px;color:var(--muted);margin-left:4px}
+
+/* ── Policy content ─────────────────────────────────────────────────────── */
+.policy-block{padding:16px 20px;background:var(--card);border-bottom:1px solid var(--border-s)}
+.policy-block p{font-size:12px;color:var(--text);line-height:1.75;margin-bottom:10px}
+.policy-block p:last-child{margin-bottom:0}
+.policy-block ul{padding-left:20px;margin-bottom:10px}
+.policy-block li{font-size:12px;color:var(--text);line-height:1.7;margin-bottom:4px}
+.policy-block strong{color:var(--green);font-weight:600}
+
+/* ── ACK log ────────────────────────────────────────────────────────────── */
+.filter-bar{display:flex;gap:10px;align-items:center;padding:12px 14px;background:var(--card2);border-bottom:1px solid var(--border);flex-wrap:wrap}
+.filter-label{font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted)}
+.filter-input{background:var(--card);border:1px solid var(--border);border-radius:var(--r-s);padding:6px 11px;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--text);outline:none;transition:border-color 0.15s;width:160px}
+.filter-input:focus{border-color:var(--green)}
+.ack-count{margin-left:auto;font-family:'DM Mono',monospace;font-size:10px;color:var(--muted)}
+.ack-msg{padding:40px 24px;text-align:center;font-size:12px;color:var(--muted)}
+
+/* ── Print ──────────────────────────────────────────────────────────────── */
+@media print{
+  .topbar,.token-overlay,.add-row-btn,.del-btn,.del-cell,.confirm-wrap,.brand-footer,
+  #pdf-btn,#save-status,.back-nav{display:none!important}
+  body{background:white!important;color:#1a1c1e!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .wrap{max-width:100%!important;margin:0!important;padding:0!important}
+  .doc-hdr{background:#2A2D30!important;border-radius:0!important;padding:14px 18px!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .doc-wordmark{color:white!important;font-size:22pt!important}
+  .doc-sub,.meta-label{color:#aaa!important}
+  .meta-val{color:white!important;font-size:10pt!important}
+  .meta-grid{background:#3D4145!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .tbl-wrap{background:white!important;border:none!important;box-shadow:none!important;border-radius:0!important}
+  table{border-collapse:collapse!important;page-break-inside:auto}
+  thead{display:table-header-group}
+  tr{page-break-inside:avoid}
+  thead th{background:#3D4145!important;color:white!important;font-size:8pt!important;padding:5px 9px!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  td{font-size:10pt!important;padding:6px 9px!important;border:0.5pt solid #ccc!important;color:#1a1c1e!important}
+  tbody tr:nth-child(even) td{background:#f5f5f5!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .pill.low{background:#e8f8e0!important;color:#2D7A0A!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .pill.med{background:#fff3cd!important;color:#856404!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .pill.high{background:#fdecea!important;color:#B71C1C!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .rc.pass{background:#e8f8e0!important;color:#2D7A0A!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .rc.fail{background:#fdecea!important;color:#B71C1C!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .sec-head{background:#3D4145!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .sec-head-title{color:white!important}
+  .stripe{background:#61C599!important;height:2pt!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .doc-footer{background:#eaecef!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .doc-footer-cell{background:#eaecef!important}
+  .tab-panel{display:none!important}
+  .tab-panel.active{display:block!important}
+  .tab-bar{display:none!important}
+  @page{size:A4 landscape;margin:10mm}
+}
+
+/* ── Mobile ─────────────────────────────────────────────────────────────── */
+@media(max-width:768px){
+  .topbar{padding:0 12px;gap:8px}
+  .topbar-title{display:none}
+  .topbar-meta{display:none}
+  .wrap{margin:14px auto;padding:0 10px}
+  .doc-hdr{padding:18px 16px}
+  .doc-wordmark{font-size:22px}
+  .meta-grid{grid-template-columns:1fr 1fr}
+  .tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  table{min-width:600px}
+  .tab-bar{flex-wrap:nowrap;overflow-x:auto;padding:0 8px}
+  .tab{flex-shrink:0}
+  .doc-footer{grid-template-columns:1fr 1fr}
+  .confirm-wrap{padding:14px}
+  .confirm-input{width:100%}
+  .confirm-btn{width:100%}
+  .stat-grid{grid-template-columns:1fr!important}
+}
+</style>
+</head>
+<body data-filename="GYMGEEK_RA_COSHH_2026.html">
+
+<!-- Token overlay (for save button) -->
+<div class="token-overlay" id="tok-overlay">
+  <div class="token-box">
+    <h2>GitHub Token Required</h2>
+    <p id="tok-msg">Enter your Personal Access Token (repo scope). Stored in this browser — you'll only be asked once per device.</p>
+    <p><a href="https://github.com/settings/tokens/new" target="_blank">Create a token →</a></p>
+    <input type="password" id="tok-inp" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" autocomplete="off">
+    <button id="tok-btn">Continue</button>
+    <p class="token-note">Only used to save documents to your GitHub repo.</p>
+  </div>
+</div>
+
+<!-- Topbar -->
+<div class="topbar">
+  <div class="topbar-brand">GYMGEEK</div>
+  <a class="back-nav" href="index.html">← All Docs</a>
+  <div class="topbar-divider"></div>
+  <div class="topbar-title">COSHH Risk Assessment</div>
+  <div class="topbar-meta">Saved: <span id="last-saved">—</span></div>
+  <button class="topbar-btn btn-pdf" id="pdf-btn" onclick="exportPDF()">⬇ PDF</button>
+  <button class="topbar-btn btn-save" id="save-btn" onclick="saveDoc()">💾 Save</button>
+  <span class="save-status" id="save-status"></span>
+</div>
+
+<!-- Document -->
+<div class="wrap">
+  <div class="doc-hdr">
+    <div class="doc-hdr-row">
+      <div>
+        <div class="doc-wordmark">GYMGEEK</div>
+        <div class="doc-sub">COSHH Risk Assessment</div>
+      </div>
+      <span class="doc-badge badge-ra">Ra</span>
+    </div>
+    <div class="meta-grid"><div class="meta-cell"><span class="meta-label">Premises</span><span class="meta-val">15 Cambridge Road, Weymouth, DT4 9TJ</span></div><div class="meta-cell"><span class="meta-label">Assessor</span><span class="meta-val" contenteditable=true>Connor Ryan</span></div><div class="meta-cell"><span class="meta-label">Review Date</span><span class="meta-val" contenteditable=true></span></div><div class="meta-cell"><span class="meta-label">Next Review</span><span class="meta-val" contenteditable=true></span></div><div class="meta-cell"><span class="meta-label">Version</span><span class="meta-val" contenteditable=true>v1</span></div><div class="meta-cell"><span class="meta-label">Status</span><span class="meta-val" contenteditable=true>Current</span></div></div>
+  </div>
+  <div class="tbl-wrap">
+        <div class="sec-head">
+      <div class="sec-head-dot"></div>
+      <span class="sec-head-title">Hazard Register</span>
+      <div class="sec-head-line"></div>
+      <span class="sec-head-note">Click any cell to edit · click rating to cycle · hover row for ×</span>
+    </div>
+    <table id="ra-tbl">
+      <thead><tr><th style="width:18%">Potential Hazard</th><th style="width:12%">Who Is at Risk</th><th style="width:27%">Control Measures</th><th class=center style="width:9%">Risk Rating</th><th style="width:24%">Preventative Measures</th><th style="width:8%">Date Completed</th><th class=center style="width:32px"></th></tr></thead>
+      <tbody><tr>
+      <td contenteditable="true" style="font-size:12px">General Surface and Equipment Cleaning Sprays</td>
+      <td contenteditable="true" style="font-size:12px">Staff</td>
+      <td contenteditable="true" style="font-size:12px">COSHH assessment completed for all products. SDS held on site and accessible to all staff. Products stored in designated locked cupboard away from member areas. Staff trained in correct use and dilution at induction. Products dispensed into clearly labelled spray bottles only. Nitrile gloves available and used.</td>
+      <td style="text-align:center;vertical-align:middle"><span class="pill low" data-r="low" style="cursor:pointer" title="Click to cycle">✓ Low</span></td>
+      <td contenteditable="true" style="font-size:12px">Staff to read SDS before using any new product. Skin irritation or adverse reaction reported to director immediately and recorded in incident log.</td>
+      <td contenteditable="true" style="font-size:12px"></td>
+      <td class="del-cell"><button class="del-btn" onclick="if(confirm('Delete?'))this.closest('tr').remove()">×</button></td>
+    </tr>
+<tr>
+      <td contenteditable="true" style="background:rgba(255,255,255,0.015)" style="font-size:12px">Concentrated Cleaning Agents</td>
+      <td contenteditable="true" style="background:rgba(255,255,255,0.015)" style="font-size:12px">Staff</td>
+      <td contenteditable="true" style="background:rgba(255,255,255,0.015)" style="font-size:12px">Concentrates stored separately, clearly labelled. Dilution ratios displayed and followed. Nitrile gloves and eye protection worn when diluting. Spill kit available in cleaning cupboard.</td>
+      <td style="text-align:center;vertical-align:middle" style="background:rgba(255,255,255,0.015)"><span class="pill low" data-r="low" style="cursor:pointer" title="Click to cycle">✓ Low</span></td>
+      <td contenteditable="true" style="background:rgba(255,255,255,0.015)" style="font-size:12px">Follow SDS first aid guidance immediately for skin or eye contact. Spills contained and disposed of per SDS instructions.</td>
+      <td contenteditable="true" style="background:rgba(255,255,255,0.015)" style="font-size:12px"></td>
+      <td class="del-cell"><button class="del-btn" onclick="if(confirm('Delete?'))this.closest('tr').remove()">×</button></td>
+    </tr>
+<tr>
+      <td contenteditable="true" style="font-size:12px">Inhalation Risk from Spray Products</td>
+      <td contenteditable="true" style="font-size:12px">Staff</td>
+      <td contenteditable="true" style="font-size:12px">Spray products used in well-ventilated areas — windows/doors open where possible. Staff not to spray toward face or overhead. Aerosol products avoided where liquid alternatives available.</td>
+      <td style="text-align:center;vertical-align:middle"><span class="pill low" data-r="low" style="cursor:pointer" title="Click to cycle">✓ Low</span></td>
+      <td contenteditable="true" style="font-size:12px">If respiratory irritation occurs, move to fresh air immediately and report to director.</td>
+      <td contenteditable="true" style="font-size:12px"></td>
+      <td class="del-cell"><button class="del-btn" onclick="if(confirm('Delete?'))this.closest('tr').remove()">×</button></td>
+    </tr>
+<tr>
+      <td contenteditable="true" style="background:rgba(255,255,255,0.015)" style="font-size:12px">Disposal of Used Cleaning Materials</td>
+      <td contenteditable="true" style="background:rgba(255,255,255,0.015)" style="font-size:12px">Staff</td>
+      <td contenteditable="true" style="background:rgba(255,255,255,0.015)" style="font-size:12px">Used paper towels disposed of in designated gym bins. Used PPE disposed of in a separate waste bag. Mop heads changed regularly and stored dry. Waste bins emptied daily.</td>
+      <td style="text-align:center;vertical-align:middle" style="background:rgba(255,255,255,0.015)"><span class="pill low" data-r="low" style="cursor:pointer" title="Click to cycle">✓ Low</span></td>
+      <td contenteditable="true" style="background:rgba(255,255,255,0.015)" style="font-size:12px">Staff not to reuse single-use PPE.</td>
+      <td contenteditable="true" style="background:rgba(255,255,255,0.015)" style="font-size:12px"></td>
+      <td class="del-cell"><button class="del-btn" onclick="if(confirm('Delete?'))this.closest('tr').remove()">×</button></td>
+    </tr>
+<tr>
+      <td contenteditable="true" style="font-size:12px">Accidental Mixing of Incompatible Products</td>
+      <td contenteditable="true" style="font-size:12px">Staff</td>
+      <td contenteditable="true" style="font-size:12px">Products stored separately and clearly labelled. Staff trained never to mix cleaning products. SDS for all products available — incompatibility warnings highlighted at induction.</td>
+      <td style="text-align:center;vertical-align:middle"><span class="pill low" data-r="low" style="cursor:pointer" title="Click to cycle">✓ Low</span></td>
+      <td contenteditable="true" style="font-size:12px">If accidental mixing produces fumes, evacuate immediately, ventilate, and call 999 if exposure has occurred.</td>
+      <td contenteditable="true" style="font-size:12px"></td>
+      <td class="del-cell"><button class="del-btn" onclick="if(confirm('Delete?'))this.closest('tr').remove()">×</button></td>
+    </tr>
+<tr>
+      <td contenteditable="true" style="background:rgba(255,255,255,0.015)" style="font-size:12px">Storage and Security of Cleaning Products</td>
+      <td contenteditable="true" style="background:rgba(255,255,255,0.015)" style="font-size:12px">Staff, Members, Visitors</td>
+      <td contenteditable="true" style="background:rgba(255,255,255,0.015)" style="font-size:12px">All cleaning products stored in locked cupboard — key held by staff only. Products never left unattended in member-accessible areas. Cupboard checked at end of each day.</td>
+      <td style="text-align:center;vertical-align:middle" style="background:rgba(255,255,255,0.015)"><span class="pill low" data-r="low" style="cursor:pointer" title="Click to cycle">✓ Low</span></td>
+      <td contenteditable="true" style="background:rgba(255,255,255,0.015)" style="font-size:12px">Members and visitors must not have access to cleaning storage areas. Any missing or misused products reported to director immediately.</td>
+      <td contenteditable="true" style="background:rgba(255,255,255,0.015)" style="font-size:12px"></td>
+      <td class="del-cell"><button class="del-btn" onclick="if(confirm('Delete?'))this.closest('tr').remove()">×</button></td>
+    </tr></tbody>
+    </table>
+    <button class="add-row-btn" onclick="addRow('ra-tbl',[
+      {t:'text',w:'18%'},{t:'text',w:'12%'},{t:'text',w:'27%'},
+      {t:'rating',w:'9%'},{t:'text',w:'24%'},{t:'text',w:'8%'},
+      {t:'del',w:'32px'}
+    ])"><span class="plus">+</span> Add hazard row</button>
+    <div class="stripe"></div>
+    <div class="doc-footer"><div class="doc-footer-cell"><label>Assessor</label><span contenteditable=true>Connor Ryan</span></div><div class="doc-footer-cell"><label>Signed</label><span contenteditable=true></span></div><div class="doc-footer-cell"><label>Directors</label><span contenteditable=true>J Otton  |  L Beals  |  C Ryan</span></div><div class="doc-footer-cell"><label>Date</label><span contenteditable=true></span></div><div class="doc-footer-cell"><label>Next Review</label><span contenteditable=true class=green></span></div><div class="doc-footer-cell"><label>Staff Notified</label><span contenteditable=true>Yes — see acknowledgement log</span></div></div>
+    <div class="confirm-wrap">
+      <div class="confirm-text">
+        <div class="confirm-title">Confirm you have read this document</div>
+        <div class="confirm-sub">Enter your full name and click confirm. No login required — logged automatically.</div>
+      </div>
+      <input class="confirm-input" id="confirm-inp" type="text" placeholder="Your full name" autocomplete="name">
+      <button class="confirm-btn" id="confirm-cbtn" onclick="doConfirm(this,'COSHH Risk Assessment')">✓ I have read this</button>
+      <span class="confirm-status" id="confirm-st"></span>
+    </div>
+  </div>
+</div>
+
+<div class="brand-footer">
+  <div class="brand-footer-dot"></div>
+  <span class="brand-footer-name">GYMGEEK</span>
+  <span class="brand-footer-addr">gymgeekonline.co.uk · athleek.co.uk · 15 Cambridge Road, Weymouth, DT4 9TJ</span>
+</div>
+
+<script>
+// ── GymGeek Shared JS ─────────────────────────────────────────────────────
+// Save: GitHub token via localStorage
+// Confirm: name only, written to GitHub using embedded WRITE_TOKEN
+
+const GH_OWNER = "gymgeekweymouth";
+const GH_REPO  = "gymgeek-docs";
+const GH_API   = `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/`;
+const TK_KEY   = "gg_token";
+
+// ── Token (for save button) ────────────────────────────────────────────────
+function storedToken(){ try{ return localStorage.getItem(TK_KEY)||null; }catch(e){ return null; } }
+function saveToken(t){ try{ localStorage.setItem(TK_KEY,t); }catch(e){} }
+function clearToken(){ try{ localStorage.removeItem(TK_KEY); }catch(e){} }
+
+function askToken(msg){
+  return new Promise(resolve=>{
+    const ov=document.getElementById('tok-overlay');
+    const pm=document.getElementById('tok-msg');
+    if(pm&&msg) pm.textContent=msg;
+    ov.classList.add('on');
+    document.getElementById('tok-inp').value='';
+    const go=()=>{
+      const v=document.getElementById('tok-inp').value.trim();
+      if(!v) return;
+      saveToken(v);
+      ov.classList.remove('on');
+      resolve(v);
+    };
+    document.getElementById('tok-btn').onclick=go;
+    document.getElementById('tok-inp').onkeydown=e=>{ if(e.key==='Enter') go(); };
+    setTimeout(()=>document.getElementById('tok-inp').focus(),80);
+  });
+}
+
+async function getToken(why){
+  const t=storedToken(); if(t) return t;
+  return await askToken(why);
+}
+
+// ── Base64 encode (unicode safe) ───────────────────────────────────────────
+function b64enc(text){
+  const bytes=new TextEncoder().encode(text);
+  let bin=''; bytes.forEach(b=>bin+=String.fromCharCode(b));
+  return btoa(bin);
+}
+
+// ── Base64 decode ──────────────────────────────────────────────────────────
+function b64dec(b64){
+  const clean=b64.split('\n').join('').split('\r').join('');
+  return decodeURIComponent(escape(atob(clean)));
+}
+
+// ── Fetch SHA via git trees (reliable for large files) ─────────────────────
+async function getSHA(filename, token){
+  const r=await fetch(
+    `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/git/trees/HEAD?t=${Date.now()}`,
+    { headers:{ Authorization:`Bearer ${token}`, Accept:'application/vnd.github+json', 'Cache-Control':'no-cache,no-store' } }
+  );
+  if(r.status===401){ clearToken(); throw new Error('Token invalid or expired — please re-enter.'); }
+  if(!r.ok) return null;
+  const d=await r.json();
+  const f=(d.tree||[]).find(x=>x.path===filename);
+  return f?f.sha:null;
+}
+
+// ── PUT to GitHub ──────────────────────────────────────────────────────────
+async function ghPut(path, token, body){
+  const r=await fetch(GH_API+path,{
+    method:'PUT',
+    headers:{ Authorization:`Bearer ${token}`, Accept:'application/vnd.github+json', 'Content-Type':'application/json', 'Cache-Control':'no-cache' },
+    body:JSON.stringify(body)
+  });
+  if(r.status===401){ clearToken(); throw new Error('Token invalid or expired — please re-enter.'); }
+  return r;
+}
+
+// ── Save document ──────────────────────────────────────────────────────────
+async function saveDoc(){
+  const btn=document.getElementById('save-btn');
+  const st=document.getElementById('save-status');
+  const token=await getToken('Enter your GitHub Personal Access Token (repo scope).');
+  if(!token) return;
+
+  btn.disabled=true;
+  btn.innerHTML='<span class="spin">⟳</span> Saving…';
+  st.textContent='';
+
+  const ts=new Date().toLocaleString('en-GB');
+  const lsEl=document.getElementById('last-saved');
+  if(lsEl) lsEl.textContent=ts;
+
+  const fname=document.body.dataset.filename;
+
+  try{
+    // Always fetch fresh SHA immediately before PUT
+    let sha=await getSHA(fname,token);
+    const html='<!DOCTYPE html>\n'+document.documentElement.outerHTML;
+    const body={ message:`Update ${fname} — ${ts}`, content:b64enc(html) };
+    if(sha) body.sha=sha;
+
+    let res=await ghPut(fname,token,body);
+
+    // Auto-retry once on SHA mismatch
+    if(res.status===422){
+      st.textContent='Retrying…';
+      await new Promise(r=>setTimeout(r,700));
+      sha=await getSHA(fname,token);
+      const body2={ message:`Update ${fname} — ${ts}`, content:b64enc(html) };
+      if(sha) body2.sha=sha;
+      res=await ghPut(fname,token,body2);
+    }
+
+    if(res.ok){
+      btn.innerHTML='✓ Saved';
+      btn.classList.add('saved');
+      st.textContent=`Saved ${ts}`;
+      setTimeout(()=>{ btn.innerHTML='💾 Save'; btn.disabled=false; btn.classList.remove('saved'); },3000);
+    } else {
+      const e=await res.json().catch(()=>({}));
+      throw new Error(e.message||`HTTP ${res.status}`);
+    }
+  } catch(e){
+    btn.innerHTML='✗ Error';
+    btn.classList.add('error');
+    st.textContent=`Save failed: ${e.message}`;
+    btn.disabled=false;
+    setTimeout(()=>{ btn.innerHTML='💾 Save'; btn.classList.remove('error'); },6000);
+  }
+}
+
+// ── Confirm read (uses embedded WRITE_TOKEN — no token needed from user) ───
+async function confirmRead(docLabel, staffName){
+  // WRITE_TOKEN must be set in the page — a fine-grained token with
+  // contents:write on this repo only. Replace the placeholder below.
+  const wt = typeof WRITE_TOKEN !== 'undefined' ? WRITE_TOKEN : null;
+  if(!wt){
+    throw new Error('Write token missing — contact your administrator.');
+  }
+
+  const ACK='acknowledgements.json';
+  const ts=new Date().toLocaleString('en-GB');
+
+  // Fetch existing file
+  let current=[], sha=null;
+  try{
+    const r=await fetch(GH_API+ACK+'?t='+Date.now(),{
+      headers:{ Authorization:`Bearer ${wt}`, Accept:'application/vnd.github+json', 'Cache-Control':'no-cache,no-store' }
+    });
+    if(r.ok){ const d=await r.json(); sha=d.sha; current=JSON.parse(b64dec(d.content)); }
+  } catch(e){ current=[]; }
+
+  current.push({ name:staffName, document:docLabel, confirmed:ts, timestamp:Date.now() });
+
+  const body={ message:`${staffName} confirmed: ${docLabel} — ${ts}`, content:b64enc(JSON.stringify(current,null,2)) };
+  if(sha) body.sha=sha;
+
+  const r2=await fetch(GH_API+ACK,{
+    method:'PUT',
+    headers:{ Authorization:`Bearer ${wt}`, Accept:'application/vnd.github+json', 'Content-Type':'application/json' },
+    body:JSON.stringify(body)
+  });
+  return r2.ok;
+}
+
+// ── Handle confirm button press ────────────────────────────────────────────
+function doConfirm(btn, docLabel){
+  const inp=document.getElementById('confirm-inp');
+  const st=document.getElementById('confirm-st');
+  const name=inp.value.trim();
+
+  if(!name){
+    inp.style.borderColor='var(--fail-txt)';
+    inp.placeholder='Please enter your name';
+    setTimeout(()=>{ inp.style.borderColor=''; inp.placeholder='Your full name'; },2000);
+    inp.focus(); return;
+  }
+
+  // Ripple
+  const rip=document.createElement('span');
+  rip.className='ripple';
+  const rc=btn.getBoundingClientRect();
+  const sz=Math.max(rc.width,rc.height);
+  rip.style.cssText=`width:${sz}px;height:${sz}px;left:${rc.width/2-sz/2}px;top:${rc.height/2-sz/2}px`;
+  btn.appendChild(rip);
+  setTimeout(()=>rip.remove(),600);
+
+  btn.disabled=true; btn.className='confirm-btn saving'; btn.textContent='⟳ Saving…';
+  inp.disabled=true; st.className='confirm-status'; st.textContent='';
+
+  confirmRead(docLabel,name)
+    .then(ok=>{
+      if(ok){
+        btn.textContent=`✓ Confirmed — ${name}`;
+        btn.className='confirm-btn done';
+        st.className='confirm-status ok';
+        st.textContent=new Date().toLocaleString('en-GB');
+      } else { throw new Error('GitHub returned an error.'); }
+    })
+    .catch(e=>{
+      btn.disabled=false; btn.className='confirm-btn err'; btn.textContent='✗ Failed — try again';
+      inp.disabled=false;
+      st.className='confirm-status bad'; st.textContent=e.message||'Error — check setup.';
+      setTimeout(()=>{ btn.className='confirm-btn'; btn.textContent='✓ I have read this'; },5000);
+    });
+}
+
+// ── Toggle result cell ─────────────────────────────────────────────────────
+function toggleRC(el){
+  const s=['','✓','✗','—'];
+  const n=s[(s.indexOf(el.dataset.s||'')+1)%s.length];
+  el.dataset.s=n; el.textContent=n;
+  el.className='rc '+({'✓':'pass','✗':'fail','—':'na','':'blank'}[n]);
+}
+
+// ── Add row ────────────────────────────────────────────────────────────────
+function addRow(tableId, cols){
+  const tbl=document.getElementById(tableId);
+  if(!tbl) return;
+  const tbody=tbl.querySelector('tbody');
+  const tr=document.createElement('tr');
+  tr.classList.add('new-row');
+
+  cols.forEach(col=>{
+    const td=document.createElement('td');
+    if(col.w) td.style.width=col.w;
+
+    if(col.t==='text'){
+      td.contentEditable='true'; td.spellcheck=false; td.style.fontSize='12px';
+      td.addEventListener('keydown',e=>{ if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();td.blur();} });
+    } else if(col.t==='rc'){
+      td.style.cssText='text-align:center;vertical-align:middle';
+      const sp=document.createElement('span');
+      sp.className='rc blank'; sp.dataset.s=''; sp.style.cursor='pointer';
+      sp.addEventListener('click',()=>toggleRC(sp));
+      td.appendChild(sp);
+    } else if(col.t==='rating'){
+      td.style.cssText='text-align:center;vertical-align:middle';
+      const sp=document.createElement('span');
+      sp.className='pill low'; sp.dataset.r='low'; sp.textContent='✓ Low';
+      sp.style.cursor='pointer'; sp.title='Click to cycle';
+      sp.addEventListener('click',()=>{
+        const c={low:'med',med:'high',high:'low'};
+        const l={low:'✓ Low',med:'▲ Med',high:'✗ High'};
+        const n=c[sp.dataset.r]; sp.dataset.r=n;
+        sp.className='pill '+n; sp.textContent=l[n];
+      });
+      td.appendChild(sp);
+    } else if(col.t==='cb'){
+      td.style.cssText='text-align:center;vertical-align:middle;padding:4px';
+      const w=document.createElement('div'); w.className='cb-wrap';
+      const cb=document.createElement('input'); cb.type='checkbox';
+      cb.addEventListener('change',()=>td.classList.toggle('cb-checked',cb.checked));
+      w.appendChild(cb); td.appendChild(w);
+    } else if(col.t==='del'){
+      td.className='del-cell';
+      const b=document.createElement('button'); b.className='del-btn'; b.innerHTML='×'; b.title='Delete row';
+      b.addEventListener('click',()=>{ if(confirm('Delete this row?')) tr.remove(); });
+      td.appendChild(b);
+    }
+    tr.appendChild(td);
+  });
+
+  // Insert before signoff row if present, else append
+  const so=tbody.querySelector('.signoff-row');
+  if(so) tbody.insertBefore(tr,so); else tbody.appendChild(tr);
+
+  const first=tr.querySelector('[contenteditable]');
+  if(first) first.focus();
+  setTimeout(()=>tr.classList.remove('new-row'),1200);
+}
+
+// ── PDF export ─────────────────────────────────────────────────────────────
+function exportPDF(){
+  const orig=document.title;
+  const fn=(document.body.dataset.filename||'document').replace('.html','');
+  document.title=fn+'_'+new Date().toLocaleDateString('en-GB').replace(/\//g,'-');
+  window.print();
+  document.title=orig;
+}
+
+const WRITE_TOKEN = "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";
+</script>
+</body>
+</html>
